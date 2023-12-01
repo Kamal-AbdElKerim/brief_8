@@ -17,10 +17,10 @@ function paginateFun(number_page) {
     return `
     <div class="relative m-2 p-2 w-[230px] h-[350px] flex max-w-xs flex-col justify-between overflow-hidden  border border-gray-100 bg-white shadow-md">
   
+    <span class="absolute top-0 right-0  bg-[#128ece] px-2 text-center text-sm font-medium text-white">-${elem["PrixFinal"] -elem["OffreDePrix"]}.00 MAD</span>
 
-    <a class="relative  mt-3 flex h-40 overflow-hidden  justify-center" >
+    <a class="  pt-2 flex h-40 overflow-hidden  justify-center" >
         <img class="object-cover"  src="${elem["img"]}" alt="product image" />
-        <span class="absolute top-0 right-0 m-2  bg-[#128ece] px-2 text-center text-sm font-medium text-white">-${elem["PrixFinal"] -elem["OffreDePrix"]}.00 MAD</span>
     </a>
 
     <div class="flex justify-between flex-col items-center gap-4  ">

@@ -48,13 +48,14 @@ $isActive = "products.php";
     width: 0px; /* Set the width */
     height: 0px; /* Set the height */
     background: none;
-
+    
     appearance: none; /* Remove default appearance for other browsers */
     border: none; /* Remove border */
     outline: none; /* Remove outline */
     vertical-align: middle; /* Align vertically */
     position: relative;
     left: 55px;
+    top: 50px;
     cursor: pointer; /* Show cursor on hover */
     border-radius: 0; /* Optional: Remove border-radius */
     pointer-events: none;
@@ -152,19 +153,37 @@ $isActive = "products.php";
                 </div>
             </div>
 
-            <form id="filterForm">
-                <label for="category">Search:</label>
-                <input type="text" name="search" id="search" onkeyup="filterProducts(this.value)">
-            </form>
+           
 
 
 
-            <form method="post" action="#">
+           
             <div class="grid-container">
 
-            <div class="item1 d-flex justify-content-end align-items-center">
+            <div class="item1 d-flex    justify-content-between    align-items-center">
+              
+            <form id="filterForm" class=" ms-5">
+            <div class='max-w-md mx-auto '>
+    <div class="relative flex items-center w-full h-12 rounded-lg shadow-lg bg-white overflow-hidden">
+        <div class="grid place-items-center h-full w-12 text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+
+        <input
+        class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+        type="text"
+        id="search" onkeyup="filterProducts(this.value)"
+        placeholder="Search something.." /> 
+    </div>
+</div>
+          
+               
+            </form>
+            <form method="post" action="#">
                 <span> Trier par : <span class="invisible">l</span> </span>
-                <select onchange="handleSelectionChange()" id="mySelect" name="quantity" class="form-select w-25 " aria-label="Default select example" style="width:17% !important;">
+                <select onchange="handleSelectionChange()" id="mySelect" name="quantity" class="form-select w-75 " aria-label="Default select example" >
                        
                         <option selected   value="0">All</option>
                         <option    value="1">Quantité, croissant </option>
@@ -202,7 +221,7 @@ $isActive = "products.php";
                 </div>
                 </div>
                    <!-- card -->
-                <div class="item3 row justify-content-center " id="data" >
+                <div class="item3 row justify-content-center " id="data"  >
 
             </div>  
                 <div class="item5  " >
@@ -236,6 +255,7 @@ $isActive = "products.php";
    
 
 
+   
 
 <?php include 'layout/js.php' ; ?>
 

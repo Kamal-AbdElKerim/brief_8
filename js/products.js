@@ -15,15 +15,19 @@ function paginateFun(number_page) {
 
   const paginate_items = filteredProducts.slice(start, end).map((elem) => {
     return `
-    <div class="relative m-2 p-2 w-[230px] h-[350px] flex max-w-xs flex-col justify-between overflow-hidden  border border-gray-100 bg-white shadow-md">
-  
+    <div class="group/item relative m-2 p-2 w-[230px] h-[350px] flex max-w-xs flex-col justify-between overflow-hidden border border-gray-100 bg-white transition duration-300 ease-in-out hover:shadow-md">
 
-    <a class="relative  mt-3 flex h-40 overflow-hidden  justify-center" >
-        <img class="object-cover"  src="${elem["img"]}" alt="product image" />
-        <span class="absolute top-0 right-0 m-2  bg-[#128ece] px-2 text-center text-sm font-medium text-white">-${elem["PrixFinal"] - elem["OffreDePrix"]}.00 MAD</span>
-    </a>
+    <span class="absolute z-50 top-0 right-0 bg-[#128ece] px-2 text-center text-sm font-medium text-white">-${elem["PrixFinal"] - elem["OffreDePrix"]}.00 MAD</span>
 
-    <div class="flex justify-between flex-col items-center gap-4  ">
+    <div class="relative pt-2 flex h-40 overflow-hidden justify-center">
+        <img class="object-cover transition-all duration-300 ease-in-out " src="${elem["img"]}" alt="product image" />
+        <div class=" bottom-2 left-2 rounded-md flex justify-center items-center   absolute top-2 right-2 scale-0 transition duration-300 ease-in-out group-hover/item:scale-100  bg-white/30 px-2 text-center ">
+        <a href='#' class='px-4 py-2 bg-white/50 rounded-sm shadow-md'>Display</a>
+        </div>
+
+    </div>
+
+    <div class="flex justify-between flex-col items-center gap-4">
 
         <h2 class="text-[#68686c] border-t border-b px-4 text-center">
             ${elem["Etiquette"]}
@@ -45,8 +49,6 @@ function paginateFun(number_page) {
     </div>
 
 </div>
-
-
 
 
 `;

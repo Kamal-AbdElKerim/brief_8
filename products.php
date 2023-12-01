@@ -22,6 +22,7 @@ $isActive = "products.php";
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
+<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
 <title>Pc Gamer</title>
@@ -87,7 +88,7 @@ $isActive = "products.php";
   /* Add any other styles for the active state */
 }
 </style>
-<script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
     <body>

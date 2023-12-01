@@ -1,3 +1,21 @@
+<?php 
+
+include '../layout/coon.php';
+
+$id = $_GET["id"] ; 
+
+
+
+$produit_result = $conn->query("SELECT * FROM `produit` WHERE Reference = $id");
+$produitData = $produit_result->fetch(PDO::FETCH_ASSOC);
+
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,12 +30,12 @@
   <div class="container mx-auto px-4">
 
 
-    <div class="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
-      <div class="lg:col-span-3 row-end-1">
-        <div class="flex justify-center">
+    <div class="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16 ">
+      <div class="lg:col-span-3 row-end-1  ">
+        <div class="flex justify-center w-full h-full">
    
             <div class="max-w-xl overflow-hidden rounded-lg">
-              <img class="h-full w-full max-w-full object-cover" src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" />
+              <img class="h-[500px] w-auto max-w-full " src="../<?= $produitData["img"] ?>" alt="" />
             </div>
        
 
@@ -26,8 +44,7 @@
       </div>
 
       <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
-        <h1 class="sm: text-2xl font-bold text-gray-900 sm:text-3xl">Product name Yassine</h1>
-        
+        <h1 class="sm: text-2xl font-bold text-gray-900 sm:text-3xl"><?= $produitData["Etiquette"] ?></h1>
 
     
 
@@ -57,12 +74,11 @@
     
         <div class="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0 mb-4">
           <div class="flex items-end">
-            <h1 class="text-3xl font-bold">$60.50</h1>
-            <span class="text-base">/month</span>
+            <h1 class="text-3xl font-bold"><?= $produitData["OffreDePrix"] ?> MAD</h1>
           </div>
         </div>
             <!-- part Price  -->
-        <div class="text-[#559f45] text-md flex justify-center items-center"><span class="text-[#559f45] text-sm px-1 my-2">✓</span>Produit en stock (50)</div>
+        <div class="text-[#559f45] text-md flex justify-center items-center"><span class="text-[#559f45] text-sm px-1 my-2">✓</span>Produit en stock (<?= $produitData["QuantiteStock"] ?>)</div>
 
             <!-- part btns  -->
         <div class="flex  items-center   justify-center gap-2 mt-2">
@@ -111,11 +127,9 @@
         </div>
 
         <div class="mt-8 flow-root sm:mt-12">
-          <h1 class="text-3xl font-bold">Delivered To Your Door</h1>
-          <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia accusantium nesciunt fuga.</p>
+  
           <h1 class="mt-8 text-3xl font-bold">From the Fine Farms of Brazil</h1>
-          <p class="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio numquam enim facere.</p>
-          <p class="mt-4">Amet consectetur adipisicing elit. Optio numquam enim facere. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore rerum nostrum eius facere, ad neque.</p>
+          <p class="mt-4"><?= $produitData["Description"] ?>.</p>
         </div>
       </div>
     </div>

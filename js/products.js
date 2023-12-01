@@ -35,6 +35,7 @@ function paginateFun(number_page) {
       <span class="text-[#128ece] font-semibold text-[18px] ">${elem["OffreDePrix"]},00 MAD</span>
       <span class="text-[#68686c] text-[12px] line-through leading-[1.2em] block">${elem["PrixFinal"]},00 MAD</span>
       <span class="text-[#559f45] text-md  leading-[1.2em] block"><span class="text-[#559f45] text-sm px-1">✓</span>Produit en stock (${elem["PrixFinal"]})</span>
+      <a href="product/product_detail.php?id=${elem["Reference"]}">gooo</a>
 
     
         </div>

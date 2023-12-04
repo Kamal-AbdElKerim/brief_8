@@ -48,6 +48,46 @@ if (isset( $_GET["selectedValue"])) {
     $produitData = $produit_result->fetchAll(PDO::FETCH_ASSOC);
 
     // Send all data back as JSON to the client
-    echo json_encode($produitData);
+
+   
+  
+    
+if (isset(  $_SESSION["user"] )) {
+    $user_id = $_SESSION["user"] ;
+    foreach ($produitData as $item) {
+       
+           
+        // Construct the query with placeholders to prevent SQL injection
+$query = "SELECT * FROM `panier` WHERE client_id = :user_id ";
+
+// Prepare the statement
+$panier_result = $conn->prepare($query);
+
+// Bind parameters and execute the query
+$panier_result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$panier_result->execute();
+    // Fetch all rows that match the criteria
+    $panierData = $panier_result->fetchAll(PDO::FETCH_ASSOC);
+    
+
+}
+}
+
+
+
+
+    if (isset($panierData)) {
+        $combinedData = array(
+           'produitData' => $produitData,
+           'panierData' => $panierData
+        
+       );
+       echo json_encode($combinedData);
+     }else {
+       echo json_encode($produitData);
+     }
+
+
+    
 
 ?>

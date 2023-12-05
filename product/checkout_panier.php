@@ -34,13 +34,6 @@
           <li><a class="hover:text-gray-200" href="../index.php">Home</a></li>
           
   <!-- Order  -->
-          <?php if (!empty($_SESSION["user"])) {  ?>
-            <li><a class="hover:text-gray-200" href="product/checkout_panier.php">Orders</a></li>
-          
-
-  
-  <!-- Order  -->
-<?php } ?>
 
           
             
@@ -243,9 +236,7 @@ xhttp.onreadystatechange = function() {
       var data = JSON.parse(xhttp.responseText);
       var ProductsContainer = document.getElementById("Products");
      
-      if (data.length === 0) {
-     window.location.href = '../index1.php'; // Redirect to index1.php
-}
+
       let total = 0 ;
       // Clear the existing content in ProductsContainer
       ProductsContainer.innerHTML = '';

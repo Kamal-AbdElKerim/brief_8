@@ -26,7 +26,7 @@
 
     <!-- sing_out  -->
     <?php if ( !empty($_SESSION["user"]) ||  !empty($_SESSION["admin"])) {  ?>
-      <form action="index.php" method="post">
+      <form action="index1.php" method="post">
     
     <li class="nav-item">  <button  name="sing_out" class="hover:text-gray-200">sing out</button> </li>
        
@@ -40,7 +40,7 @@
 else{
   ?>
                  <!-- sign  -->
-                 <li><a class="hover:text-gray-200" href="index.php">Login</a></li>
+                 <li><a class="hover:text-gray-200" href="index1.php">Login</a></li>
 
      <!-- sign  -->
      <?php 

@@ -155,6 +155,7 @@ $error_message = "Email and password are required.";
                         <input type="password" name="password"  class="form-control rounded-pill" id="exampleInputPassword1">
                       </div>
                       <button  name="submit" type="submit" class="btn btn-primary mb-5">Submit</button>
+                      <a href="new_account.php"  class="btn btn-primary">new account</a>
                  
                   <div id="error">
                   <?php if (isset($error_message , $_POST['submit'])  ) { ?>

@@ -144,7 +144,7 @@ $isActive = "index.php";
     <!-- ***** Main Banner Area End ***** -->
 
     <!-- ***** Products Area Starts ***** -->
-    <section class="section " id="top">
+    <section class="   flex gap-2 p-2" id="top">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -159,45 +159,9 @@ $isActive = "index.php";
 
 
            
-            <div class="grid-container">
+            <div class="flex " 
+>
 
-            <div class="item1 d-flex    justify-content-between    align-items-center">
-              
-            <form id="filterForm" class=" ms-5">
-            <div class='max-w-md mx-auto '>
-    <div class="relative flex items-center w-full h-12 rounded-lg shadow-lg bg-white overflow-hidden">
-        <div class="grid place-items-center h-full w-12 text-gray-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-        </div>
-
-        <input
-        class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
-        type="text"
-        id="search" onkeyup="filterProducts(this.value)"
-        placeholder="Search something.." /> 
-    </div>
-</div>
-          
-               
-            </form>
-            <form method="post" action="#">
-                <span> Trier par : <span class="invisible">l</span> </span>
-                <select onchange="handleSelectionChange()" id="mySelect" name="quantity" class="form-select w-75 " aria-label="Default select example" >
-                       
-                        <option selected   value="0">All</option>
-                        <option    value="1">Quantité, croissant </option>
-                        <option    value="2">Quantité, décroissant </option>
-                        <option    value="3">Prix, croissant </option>
-                        <option    value="4">Prix, décroissant </option>
-
-                        </select>
-    
-  
-
-    
-</div>
   <div class="item2 ">
     
   <div class="col-lg-12">
@@ -221,19 +185,62 @@ $isActive = "index.php";
 </form>
                 </div>
                 </div>
-                   <!-- card -->
-                <div class="item3 row justify-content-center " id="data"  >
 
-            </div>  
-                <div class="item5  " >
-                <nav aria-label="..." class=" d-flex  justify-content-center  w-100 ">
-  <ul class="pagination " id="paginate">
- 
-   
-  </ul>
+                
+<section class="flex flex-col gap-3 w-full items-start py-6 justify-start px-4">
+
+<div class="flex   w-full  md:justify-between gap-2 md:flex-row flex-col-reverse justify-center items-start">
+              
+              <form id="filterForm" class="  flex items-center">
+             
+      <div class="relative flex items-center w-full h-12 rounded-lg shadow-md bg-white overflow-hidden">
+          <div class="grid place-items-center h-full w-12 text-gray-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+          </div>
+  
+          <input
+          class="peer h-full w-full outline-none text-sm text-gray-700 "
+          type="text"
+          id="search" onkeyup="filterProducts(this.value)"
+          placeholder="Search something.." /> 
+      </div>
+
+            
+                 
+              </form>
+              <form method="post" action="#" class="">
+                  <span> Trier par : <span class="invisible">l</span> </span>
+                  <select onchange="handleSelectionChange()" id="mySelect" name="quantity" class="form-select w-full " aria-label="Default select example" >
+                         
+                          <option selected   value="0">All</option>
+                          <option    value="1">Quantité, croissant </option>
+                          <option    value="2">Quantité, décroissant </option>
+                          <option    value="3">Prix, croissant </option>
+                          <option    value="4">Prix, décroissant </option>
+  
+                          </select>
+      
+    
+  
+      
+  </div>
+                   <!-- card -->
+                   <div class=" flex flex-wrap justify-center items-start  px-2    " id="data"  >
+
+</div>  
+    <div class="flex w-full items-center   justify-center" >
+    <nav aria-label="..." class=" d-flex  justify-content-center  w-100 ">
+<ul class="pagination " id="paginate">
+
+
+</ul>
 </nav>
-            </div>  
-             <!-- end card -->
+</div>  
+ <!-- end card -->
+</section>
+     
 
 
 

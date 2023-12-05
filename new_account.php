@@ -38,7 +38,7 @@ if (!empty($email) && !empty($password) && !empty($Name)) {
  
     if ( $stmt->execute()) {
       $color = "success" ;
-      $error_Sign_Up = "Hello $Name, you have registered successfully. You must wait for your acceptance by the admin.";
+      $error_Sign_Up = "Hello $Name, you registered successfully.";
         $Name = '';
         $email = '';
         $password = '';
@@ -112,9 +112,23 @@ if (!empty($email) && !empty($password) && !empty($Name)) {
   <form class="row g-3" method="post" >
 
                 <h4>Create a new account</h4>
-          <div class="col-12">
-            <label for="inputEmail4" class="form-label">Name</label>
-            <input type="text" name="Name" class="form-control" value="<?php echo (isset($Name)) ? $Name : ''; ?>" id="inputEmail4">
+         
+       
+       
+          <!-- <div class="col-12">
+            <label for="inputAddress" class="form-label">confirm password </label>
+            <input type="password" class="form-control" id="inputAddress">
+          </div> -->
+
+      
+
+          <div class="col-md-6">
+            <label for="inputName" class="form-label">Name</label>
+            <input type="text" name="Name" class="form-control" value="<?php echo (isset($Name)) ? $Name : ''; ?>" id="inputName">
+          </div>
+          <div class="col-md-6">
+            <label for="inputPrénom" class="form-label">Prénom</label>
+            <input type="text" name="Prénom" class="form-control" value="<?php echo (isset($Prenom)) ? $Prenom : ''; ?>" id="inputPrénom">
           </div>
           <div class="col-12">
             <label for="inputEmail4" class="form-label">Email</label>
@@ -124,14 +138,39 @@ if (!empty($email) && !empty($password) && !empty($Name)) {
             <label for="inputPassword4" class="form-label">Password</label>
             <input type="password" value="<?php echo (isset($password)) ? $password : ''; ?>" name="password" class="form-control" id="inputPassword4">
           </div>
-          <!-- <div class="col-12">
-            <label for="inputAddress" class="form-label">confirm password </label>
-            <input type="password" class="form-control" id="inputAddress">
-          </div> -->
+          <div class="col-12">
+    <label for="inputAddress2" class="form-label">Address</label>
+    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+  </div>
+  <div class="col-md-7">
+    <label for="inputAddress" class="form-label">phone</label>
+    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  </div>
+ 
+  
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">ville</label>
+    <select id="inputState" class="form-select">
+      <option selected>Choose...</option>
+      <option value="Marrakech">Marrakech</option>
+      <option value="Casablanca">Casablanca</option>
+      <option value="Fès">Safi</option>
+      <option value="Chefchaouen">Chefchaouen</option>
+      <option value="Essaouira">Essaouira</option>
+      <option value="Rabat">Rabat</option>
+    </select>
+  </div>
 
-          <div class="col-12 mt-5">
+  
+  <div class="col-12 mt-5">
             <button type="submit" name="Sign_Up" class="btn btn-primary">Sign Up</button>
           </div>
+
+
+
+
+
+
           <?php if (isset($error_Sign_Up , $_POST['Sign_Up'])  ) { ?>
                         <div class="alert alert-<?= $color ?> mt-4" role="alert">
                             <?php echo $error_Sign_Up; ?>

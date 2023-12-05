@@ -80,7 +80,7 @@ $categorieData = $user_result->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<?php    include 'layout/head.php'; ?>
+<?php    include 'layout/head.php' ?>
     <title>Ajouter Catégories</title>
     <style>
      

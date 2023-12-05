@@ -13,7 +13,7 @@
         </ul>
         <ul class="navbar navbar-nav navbar-right" style="display:flex;">
                                                                         
-          <li class="nav-item me-4"><a class="nav-link <?php if ($isActive === "index1.php") echo ' activee'; ?>" href="index1.php" >Front</a></li>
+          <li class="nav-item me-4"><a class="nav-link <?php if ($isActive === "index1.php") echo ' activee'; ?>" href="index.php" >Front</a></li>
                                     
            <form action="index1.php" method="post">
           <li class="nav-item me-4">  <button name="sing_out" class="nav-link ">sing out</button> </li>

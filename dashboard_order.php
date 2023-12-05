@@ -124,28 +124,23 @@ body{
         
           <a class="mb-5 chose"  href="dashboard_Products.php">Ajouter Produits</a>
         
-          <a class="mb-5 chose active"  href="dashboard_Admins.php">Liste des Admins</a>
+          <a class="mb-5 chose"  href="dashboard_Admins.php">Liste des Admins</a>
 
-          <a class="mb-5 chose"  href="dashboard_order.php">Liste des orders</a>
-
+          <a class="mb-5 chose active"  href="dashboard_order.php">Liste des orders</a>
                  
         
           
           </div>
           <div class="col-sm-12 " style=" min-height: 1000px;" >
             <div class="row container-fluid ">
-            <div id="shawdata" class=" col-sm-4  pt-4  text-light text-start table-responsive">
+            <div id="shawdata2" class=" col-sm-6  pt-4  text-light text-start table-responsive">
 
               <!-- table the admins -->
           
                 </div>
-                <div id="shawdata1" class=" col-sm-4  pt-4  text-light text-start table-responsive">
-
-                   <!-- table the Utilisateurs -->
             
-                </div>
 
-                <div  id="shawdata2" class=" col-sm-4  pt-4  text-light text-start table-responsive">
+                <div  id="shawdata" class=" col-sm-6  pt-4  text-light text-start table-responsive">
 
                
             
@@ -183,30 +178,31 @@ body{
   
 
   // Fetch data for admins and update the table
-  fetchDataAndUpdateTable("Admins_select.php", "shawdata");
+  fetchDataAndUpdateTable("All_orders.php", "shawdata");
+
+  fetchDataAndUpdateTable("Orders_shap.php", "shawdata2");
 
   // Fetch data for users and update the table
-  fetchDataAndUpdateTable("Utilisateurs_select.php", "shawdata1");
+  
 
-  fetchDataAndUpdateTable("Visiterurs_select.php", "shawdata2");
   
 </script>
-<script>
 
-  function makeRequest(id ,url) { 
+<script>
+  function AcceptRequest(id) {
   var xhr = new XMLHttpRequest();
-  console.log(url);
-  xhr.open('GET', `${url}` + id, true);
+  xhr.open('GET', "Dashboard/Accept_Order.php?id=" + id, true);
 
   xhr.onload = function() {
     if (xhr.status >= 200 && xhr.status < 300) {
-
-      fetchDataAndUpdateTable("Utilisateurs_select.php", "shawdata1");
-
-      fetchDataAndUpdateTable("Admins_select.php", "shawdata");
-
      
-      fetchDataAndUpdateTable("Visiterurs_select.php", "shawdata2");
+      
+
+      fetchDataAndUpdateTable("All_orders.php", "shawdata");
+      fetchDataAndUpdateTable("Orders_shap.php", "shawdata2");
+
+
+
 
      
     } else {
@@ -220,21 +216,19 @@ body{
 
   xhr.send();
 }
-</script>
-<script>
-  function AcceptRequest(id) {
+  function rmoveRequest(id) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', "Dashboard/Accept_Visiteurs.php?id=" + id, true);
+  xhr.open('GET', "Dashboard/Rmove_Order.php?id=" + id, true);
 
   xhr.onload = function() {
     if (xhr.status >= 200 && xhr.status < 300) {
      
-      fetchDataAndUpdateTable("Utilisateurs_select.php", "shawdata1");
+      
 
-      fetchDataAndUpdateTable("Admins_select.php", "shawdata");
+      fetchDataAndUpdateTable("All_orders.php", "shawdata");
 
 
-      fetchDataAndUpdateTable("Visiterurs_select.php", "shawdata2");
+      fetchDataAndUpdateTable("Orders_shap.php", "shawdata2");
 
      
     } else {

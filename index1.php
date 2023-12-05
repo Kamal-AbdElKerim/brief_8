@@ -7,6 +7,9 @@ if (isset($_POST['sing_out'])) {
   header("Location: index1.php");
   
 }
+if ( !empty($_SESSION["user"]) ||  !empty($_SESSION["admin"])) {  
+  header("Location: http://localhost/brief-7/", true);  
+}
 
 function sanitizeInput($data) {
   $data = trim($data);
@@ -74,25 +77,8 @@ $error_message = "Email and password are required.";
 }
 
 
-}
+}?>
 
-
-
-
-
-
-
-
-
-
-
-
-?>
-
-<?php 
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -129,58 +115,48 @@ $error_message = "Email and password are required.";
    
    ?>
 
-
-<div class="page-index" id="top">
-
-</div>
-
-<div class="page-index" id="top">
-
-<!-- ***** form  ***** -->
-
-<div class="container overflow-hidden ">
-  <div class="row gy-3">
-    <div class=" col-sm-6 ">
-      <div class="p-3">
-
-      
-      <form  method="post"  >
-        <h4>Log in :</h4>
-                        <div class="col-12">
-                            <label for="inputEmail4" class="form-label">Email</label>
-                            <input type="email" name="email" value="<?php echo (isset($email)) ? $email : ''; ?>" class="form-control" id="inputEmail4">
-                          </div>
-                      <div class="form-group mb-5 ">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" name="password"  class="form-control rounded-pill" id="exampleInputPassword1">
-                      </div>
-                      <button  name="submit" type="submit" class="btn btn-primary mb-5">Submit</button>
-                      <a href="new_account.php"  class="btn btn-primary">new account</a>
-                 
-                  <div id="error">
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 ">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm pt-6">
+    
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+  </div>
+  <div id="error">
                   <?php if (isset($error_message , $_POST['submit'])  ) { ?>
                         <div class="alert alert-<?= $color ?> mt-2" role="alert">
                             <?php echo $error_message; ?>
                         </div> 
                         <?php    } ?> 
                   </div>
-
-                   
-                    </form>
-                  </div>
-                  
-               
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form class="space-y-6"  method="POST">
+      <div>
+        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+        <div class="mt-2">
+          <input value="<?php echo (isset($email)) ? $email : ''; ?>" id="email" name="email" type="email" autocomplete="email"  class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
       </div>
-    </div>
-    <div class=" col-sm-6 ">
-     
 
+      <div>
+        <div class="flex items-center justify-between">
+          <label for="password" class="block text-sm font-medium leading-6 text-gray-900 ">Password</label>
+         
+        </div>
+        <div class="mt-2">
+          <input  id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
       </div>
-    </div>
- 
+
+      <div>
+        <button name="submit" type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+      </div>
+    </form>
+
+    <p class="mt-10 text-center text-sm text-gray-500">
+      Not a member?
+      <a href="new_account.php" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Create Account</a>
+    </p>
   </div>
 </div>
- 
 
     
    <?php include 'layout/footer.php' ; ?>

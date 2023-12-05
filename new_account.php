@@ -5,65 +5,11 @@ $isActive ="new_account.php";
 if (isset($_POST['sing_out'])) { 
   session_destroy();
 }
-
-function sanitizeInput($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-function validateEmail($email) {
-  // Regular expression for email validation
-  $pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-
-  // Check if the email matches the pattern
-  if (preg_match($pattern, $email)) {
-      return true; // Valid email format
-  } else {
-      return false; // Invalid email format
-  }
-}
-
-if (isset($_POST['Sign_Up'])) {
-  // Retrieve form data
-$Name =sanitizeInput($_POST['Name']) ;
-$email =sanitizeInput($_POST['email']) ;
-$password =sanitizeInput($_POST['password']) ;
-
-if (!empty($email) && !empty($password) && !empty($Name)) {
-
-  if (validateEmail($email)) {
-    
-    $stmt = $conn->prepare("INSERT INTO `users`(`Name`, `Email`, `Password`) VALUES ('$Name','$email','$password')");
- 
-    if ( $stmt->execute()) {
-      $color = "success" ;
-      $error_Sign_Up = "Hello $Name, you registered successfully.";
-        $Name = '';
-        $email = '';
-        $password = '';
-    }else {
-      $color = "danger" ;
-        $error_Sign_Up = "error";
-    }
-} else {
-  $color = "danger" ;
-  $error_Sign_Up = "email is not correct ";
-}
-
-
-}else {
-  $color = "danger" ;
-  $error_Sign_Up = "entez Name et email et password ";
-}
-
+ if ( !empty($_SESSION["user"]) ||  !empty($_SESSION["admin"])) {  
+  header("Location: http://localhost/brief-7/", true);  
 }
 ?>
 
-<?php 
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,130 +17,150 @@ if (!empty($email) && !empty($password) && !empty($Name)) {
      <?php    include 'layout/head.php'; ?>
      
 
-    <body>
+    <body class=" bg-gray-400">
+   <?php include 'layout/navbar.php' ;?>
     
 
-   <?php include 'layout/navbar.php' ;
-   
-
-   
-   
-   
-   ?>
 
 
   
-   <?php
 
 
-
-
-
-      
-
-   
-   ?>
-
-
-<div class="page-index" id="top">
-
+<div class="h-full bg-gray-400  my-8">
+	<!-- Container -->
+	<div class="mx-auto">
+		<div class="flex justify-center px-6 py-12">
+			<!-- Row -->
+			<div class="w-full xl:w-3/4 lg:w-11/12 flex">
+				<!-- Col -->
+				<div class="w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
+					style="background-image: url('https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=andy-holmes-EOAKUQcsFIU-unsplash.jpg&w=1920')"></div>
+				<!-- Col -->
+				<div class="w-full lg:w-7/12 bg-white dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
+					<h3 class="py-4 text-2xl text-center text-gray-800 dark:text-white">Create an Account!</h3>
+                    <div id="created_yassine" class=" hidden p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 text-center" role="alert">
+                    User created successfully!
+</div>
+                    <p class="text-xs italic text-red-500 text-center" id="error_msg"></p>
+                    
+					<form id="form_yassine" class="px-8 pt-6 pb-8 mb-4 bg-white dark:bg-gray-800 rounded">
+						<div class="mb-4 md:flex md:justify-between">
+							<div class="mb-4 md:mr-2 md:mb-0">
+								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="firstName">
+                                    First Name
+                                </label>
+								<input
+                                    class="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    id="firstName"
+                                    type="text"
+                                    placeholder="First Name"
+                                />
+							</div>
+							<div class="md:ml-2">
+								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="lastName">
+                                    Last Name
+                                </label>
+								<input
+                                    class="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    id="lastName"
+                                    type="text"
+                                    placeholder="Last Name"
+                                />
+							</div>
+						</div>
+						<div class="mb-4">
+							<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="email">
+                                Email
+                            </label>
+							<input
+                                class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                id="email"
+                                type="text"
+                                placeholder="Email"
+                            />
+						</div>
+					
+							<div class="mb-4 ">
+								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="password">
+                                    Password
+                                </label>
+								<input
+                                    class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    id="password"
+                                    type="password"
+                                    placeholder="******************"
+                                />
+								
+							</div>
+							
+                            <div class="mb-4">
+							<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="email">
+                                Addresse
+                            </label>
+							<input
+                                class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                id="address"
+                                type="text"
+                                placeholder="Address"
+                            />
+						</div>
+                        <div class="mb-4 md:flex md:justify-between">
+							<div class="mb-4 md:mr-2 md:mb-0">
+								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="password">
+                                    Phone
+                                </label>
+								<input
+                                    class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    id="phone"
+                                    type="text"
+                                    placeholder="063*****"
+                                />
+								
+							</div>
+							<div class="md:ml-2">
+								<label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white" for="c_password">
+                                    City
+                                </label>
+								<input
+                                    class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                    id="city"
+                                    type="text"
+                                    placeholder="safi..."
+                                />
+							</div>
+						</div>
+						
+						<div class="mb-6 text-center">
+							<button
+                            onclick="onSubmit()"
+                                class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 dark:bg-blue-700 dark:text-white dark:hover:bg-blue-900 focus:outline-none focus:shadow-outline"
+                                type="button"
+                            >
+                                Register Account
+                            </button>
+						</div>
+						<hr class="mb-6 border-t" />
+				
+						<div class="text-center">
+							<a class="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800"
+								href="index1.php">
+								Already have an account? Login!
+							</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+  
+  
+  <?php include 'layout/footer.php' ; ?>
 </div>
 
-<div class="page-index" id="top">
-
-<!-- ***** form  ***** -->
-
-<div class="container overflow-hidden ">
-
-    <div class=" col-sm-6 ">
-      <div class="p-3">
-
-  <form class="row g-3" method="post" >
-
-                <h4>Create a new account</h4>
-         
-       
-       
-          <!-- <div class="col-12">
-            <label for="inputAddress" class="form-label">confirm password </label>
-            <input type="password" class="form-control" id="inputAddress">
-          </div> -->
-
-      
-
-          <div class="col-md-6">
-            <label for="inputName" class="form-label">Name</label>
-            <input type="text" name="Name" class="form-control" value="<?php echo (isset($Name)) ? $Name : ''; ?>" id="inputName">
-          </div>
-          <div class="col-md-6">
-            <label for="inputPrénom" class="form-label">Prénom</label>
-            <input type="text" name="Prénom" class="form-control" value="<?php echo (isset($Prenom)) ? $Prenom : ''; ?>" id="inputPrénom">
-          </div>
-          <div class="col-12">
-            <label for="inputEmail4" class="form-label">Email</label>
-            <input type="text" name="email" value="<?php echo (isset($email)) ? $email : ''; ?>" class="form-control" id="inputEmail4">
-          </div>
-          <div class="col-12">
-            <label for="inputPassword4" class="form-label">Password</label>
-            <input type="password" value="<?php echo (isset($password)) ? $password : ''; ?>" name="password" class="form-control" id="inputPassword4">
-          </div>
-          <div class="col-12">
-    <label for="inputAddress2" class="form-label">Address</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="col-md-7">
-    <label for="inputAddress" class="form-label">phone</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
- 
-  
-  <div class="col-md-4">
-    <label for="inputState" class="form-label">ville</label>
-    <select id="inputState" class="form-select">
-      <option selected>Choose...</option>
-      <option value="Marrakech">Marrakech</option>
-      <option value="Casablanca">Casablanca</option>
-      <option value="Fès">Safi</option>
-      <option value="Chefchaouen">Chefchaouen</option>
-      <option value="Essaouira">Essaouira</option>
-      <option value="Rabat">Rabat</option>
-    </select>
-  </div>
-
-  
-  <div class="col-12 mt-5">
-            <button type="submit" name="Sign_Up" class="btn btn-primary">Sign Up</button>
-          </div>
-
-
-
-
-
-
-          <?php if (isset($error_Sign_Up , $_POST['Sign_Up'])  ) { ?>
-                        <div class="alert alert-<?= $color ?> mt-4" role="alert">
-                            <?php echo $error_Sign_Up; ?>
-                        </div> 
-                   
-
-                   
-                    </form>
-                  </div>
-                  
-                <?php    } ?> 
-</form>
-      </div>
-    </div>
- 
-  </div>
-</div>
- 
+<script src="./auth/create.js"></script>
 
     
-   <?php include 'layout/footer.php' ; ?>
-
-   <?php include 'layout/js.php' ; ?>
-
 
 
   </body>

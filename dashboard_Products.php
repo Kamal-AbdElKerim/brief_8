@@ -171,6 +171,9 @@ $produitData = $produit_result->fetchAll(PDO::FETCH_ASSOC);
          <a class="mb-5 chose active"  href="dashboard_Products.php">Ajouter Produits</a>
        
          <a class="mb-5 chose "  href="dashboard_Admins.php">Liste des Admins</a>
+
+         <a class="mb-5 chose"  href="dashboard_order.php">Liste des orders</a>
+
        
         
        

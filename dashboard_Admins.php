@@ -134,22 +134,17 @@ body{
           </div>
           <div class="col-sm-12 " style=" min-height: 1000px;" >
             <div class="row container-fluid ">
-            <div id="shawdata" class=" col-sm-4  pt-4  text-light text-start table-responsive">
+            <div id="shawdata" class=" col-sm-6  pt-4  text-light text-start table-responsive">
 
               <!-- table the admins -->
           
                 </div>
-                <div id="shawdata1" class=" col-sm-4  pt-4  text-light text-start table-responsive">
+                <div id="shawdata1" class=" col-sm-6  pt-4  text-light text-start table-responsive">
 
                    <!-- table the Utilisateurs -->
             
                 </div>
 
-                <div  id="shawdata2" class=" col-sm-4  pt-4  text-light text-start table-responsive">
-
-               
-            
-                </div>
           </div>
         </div>
       </div>
@@ -188,7 +183,6 @@ body{
   // Fetch data for users and update the table
   fetchDataAndUpdateTable("Utilisateurs_select.php", "shawdata1");
 
-  fetchDataAndUpdateTable("Visiterurs_select.php", "shawdata2");
   
 </script>
 <script>
@@ -206,7 +200,6 @@ body{
       fetchDataAndUpdateTable("Admins_select.php", "shawdata");
 
      
-      fetchDataAndUpdateTable("Visiterurs_select.php", "shawdata2");
 
      
     } else {
@@ -234,7 +227,6 @@ body{
       fetchDataAndUpdateTable("Admins_select.php", "shawdata");
 
 
-      fetchDataAndUpdateTable("Visiterurs_select.php", "shawdata2");
 
      
     } else {

@@ -143,7 +143,7 @@ if (isset($_POST['sing_out'])) {
 				
 						<div class="text-center">
 							<a class="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800"
-								href="index1.php">
+								href="login.php">
 								Already have an account? Login!
 							</a>
 						</div>

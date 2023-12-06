@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top " style="background-color: #f9f9f9;">
     <div class="container-fluid">
-      <a href="index1.php" class="navbar-brand ms-5" >
+      <a href="login.php" class="navbar-brand ms-5" >
                         <img src="assets\images\logo_1.png">
                     </a>
   
@@ -13,9 +13,9 @@
         </ul>
         <ul class="navbar navbar-nav navbar-right" style="display:flex;">
                                                                         
-          <li class="nav-item me-4"><a class="nav-link <?php if ($isActive === "index1.php") echo ' activee'; ?>" href="index.php" >Front</a></li>
+          <li class="nav-item me-4"><a class="nav-link <?php if ($isActive === "login.php") echo ' activee'; ?>" href="index.php" >Front</a></li>
                                     
-           <form action="index1.php" method="post">
+           <form action="login.php" method="post">
           <li class="nav-item me-4">  <button name="sing_out" class="nav-link ">sing out</button> </li>
 
            </form>

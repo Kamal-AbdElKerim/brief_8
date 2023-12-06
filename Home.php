@@ -29,11 +29,19 @@ $num = count($UsersData);
 
 $numUsersData = ($num / 100) * 100;
 
-$Users_result = $conn->query("SELECT * FROM `users` WHERE is_Active = 0 ORDER BY id DESC");
-$UsersData = $Users_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($UsersData);
+$details_commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 1 ORDER BY details_id DESC");
+$details_commandeData = $details_commande_result->fetchAll(PDO::FETCH_ASSOC);
+$num = count($details_commandeData);
 
-$numDataData = ($num / 100) * 100;
+$commandeData = ($num / 100) * 100;
+
+$commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 0 ORDER BY details_id DESC");
+$commandeData1 = $commande_result->fetchAll(PDO::FETCH_ASSOC);
+$num = count($commandeData1);
+
+$commandeData1 = ($num / 100) * 100;
+
+
 
 
 ?>
@@ -248,17 +256,17 @@ body{
                 </div>
                
             </div>
-            <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_Admins.php">Liste des Utilisateurs</a></h3>
-            <div class="progress blue">
-            <div class="progress-value"><?= $numUsersData ?></div>
-                <div class="progress-bar progress-bar-info progress-bar-striped " style="width:<?= $numUsersData ?>%;">
+            <h3 class="progress-title  "><a class="btn btn-outline-info p-2" href="dashboard_Categories.php"  >Liste des Catégories </a></h3>
+            <div class="progress red">
+            <div class="progress-value"><?= $numcategorie?></div>
+                <div class="progress-bar progress-bar-danger progress-bar-striped " style="width:<?= $numcategorie?>%;">
                    
                 </div>
             </div>
-            <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_Admins.php">Liste des Visiterurs</a></h3>
+            <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_Admins.php">Liste des Produits En Attente de Confirmation</a></h3>
             <div class="progress blue">
-            <div class="progress-value"><?= $numDataData ?></div>
-                <div class="progress-bar progress-bar-info progress-bar-striped " style="width:<?= $numDataData ?>%;">
+            <div class="progress-value"><?= $commandeData ?></div>
+                <div class="progress-bar progress-bar-info progress-bar-striped " style="width:<?= $commandeData ?>%;">
                    
                 </div>
             </div>
@@ -273,13 +281,15 @@ body{
                 <div class="container mt-4 ms-2">
     <div class="row mt-12">
         <div class="col-md-12 text-start ">
-            <h3 class="progress-title  "><a class="btn btn-outline-info p-2" href="dashboard_Categories.php"  >Liste des Catégories </a></h3>
-            <div class="progress red">
-            <div class="progress-value"><?= $numcategorie?></div>
-                <div class="progress-bar progress-bar-danger progress-bar-striped " style="width:<?= $numcategorie?>%;">
+        <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_Admins.php">Liste des Client</a></h3>
+            <div class="progress blue">
+            <div class="progress-value"><?= $numUsersData ?></div>
+                <div class="progress-bar progress-bar-info progress-bar-striped " style="width:<?= $numUsersData ?>%;">
                    
                 </div>
             </div>
+
+        
             <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_Products.php">Liste des Produits</a></h3>
             <div class="progress blue">
             <div class="progress-value"><?= $numproduit?></div>
@@ -287,13 +297,15 @@ body{
                   
                 </div>
             </div>
-            <h3 class="progress-title  text-white "><button class="btn btn-outline-info p-2"  disabled >Liste des .............</button></h3>
+
+            <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_Products.php">Liste des Produits shipped</a></h3>
             <div class="progress blue">
-            <div class="progress-value">87%</div>
-                <div class="progress-bar progress-bar-info progress-bar-striped " style="width:50%;">
+            <div class="progress-value"><?= $commandeData1?></div>
+                <div class="progress-bar progress-bar-info progress-bar-striped " style="width:<?= $commandeData1?>%;">
                   
                 </div>
             </div>
+      
           
         </div>
     </div>

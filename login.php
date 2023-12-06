@@ -1,10 +1,10 @@
 
 <?php include 'layout/coon.php';
-$isActive = 'index1.php';
+$isActive = 'login.php';
 
 if (isset($_POST['sing_out'])) { 
   session_destroy();
-  header("Location: index1.php");
+  header("Location: login.php");
   
 }
 if ( !empty($_SESSION["user"]) ||  !empty($_SESSION["admin"])) {  
@@ -40,7 +40,6 @@ $userData = $user_result->fetch();
 
 
 
-
 if (!empty($AdminData)) {
   
     header("Location: Home.php");
@@ -62,6 +61,8 @@ if (!empty($userData) && $userData["is_Active"] === 1) {
 
   $error_message = "Hello " . $userData['name'] . " You must wait for your acceptance by the admin.";
 }
+
+
 
 
 

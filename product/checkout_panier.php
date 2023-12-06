@@ -49,7 +49,7 @@
 
     <!-- sing_out  -->
     <?php if ( !empty($_SESSION["user"]) ||  !empty($_SESSION["admin"])) {  ?>
-  <form action="../index1.php" method="post">
+  <form action="../login.php" method="post">
     
           <li class="nav-item me-4">  <button  name="sing_out" class="nav-link ">sing out</button> </li>
              
@@ -63,7 +63,7 @@
 else{
   ?>
                  <!-- sign  -->
-                 <li><a class="hover:text-gray-200" href="index1.php">Login</a></li>
+                 <li><a class="hover:text-gray-200" href="login.php">Login</a></li>
 
      <!-- sign  -->
      <?php 

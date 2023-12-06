@@ -29,13 +29,13 @@ $num = count($UsersData);
 
 $numUsersData = ($num / 100) * 100;
 
-$details_commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 1 ORDER BY details_id DESC");
+$details_commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 0 ORDER BY details_id DESC");
 $details_commandeData = $details_commande_result->fetchAll(PDO::FETCH_ASSOC);
 $num = count($details_commandeData);
 
 $commandeData = ($num / 100) * 100;
 
-$commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 0 ORDER BY details_id DESC");
+$commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 1 ORDER BY details_id DESC");
 $commandeData1 = $commande_result->fetchAll(PDO::FETCH_ASSOC);
 $num = count($commandeData1);
 
@@ -263,7 +263,7 @@ body{
                    
                 </div>
             </div>
-            <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_Admins.php">Liste des Produits En Attente de Confirmation</a></h3>
+            <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_order.php">Liste des Produits En Attente de Confirmation</a></h3>
             <div class="progress blue">
             <div class="progress-value"><?= $commandeData ?></div>
                 <div class="progress-bar progress-bar-info progress-bar-striped " style="width:<?= $commandeData ?>%;">
@@ -298,7 +298,7 @@ body{
                 </div>
             </div>
 
-            <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_Products.php">Liste des Produits shipped</a></h3>
+            <h3 class="progress-title  text-white "><a class="btn btn-outline-info p-2" href="dashboard_order.php">Liste des Produits shipped</a></h3>
             <div class="progress blue">
             <div class="progress-value"><?= $commandeData1?></div>
                 <div class="progress-bar progress-bar-info progress-bar-striped " style="width:<?= $commandeData1?>%;">

@@ -1,11 +1,14 @@
-<?php include '../layout/coon.php';
+<?php 
+ include '../DataBase.php'; 
+ session_start();
+
+
 
  $id = $_GET["id"] ;
 
-$stmt = $conn->prepare("DELETE FROM `users` WHERE id = $id");
-$stmt->execute(); 
+ $data = new Users() ; 
 
-
+ $data->deleteUser('users',"id = $id") ;
 
 
 

@@ -1,4 +1,7 @@
-<?php include 'layout/coon.php';
+<?php 
+session_start();
+include 'DataBase.php';
+$Database = new Database();
 
 
 if (isset($_GET['id'])) {
@@ -8,14 +11,10 @@ $_SESSION['id_pro'] = $id;
 
 }
 
-$produit_result = $conn->query("SELECT * FROM `produit` WHERE Reference = $id ");
-$produitData = $produit_result->fetch(PDO::FETCH_ASSOC);
+
+$produitData =  $Database->selectData('produit','*',"Reference = $id",'',"1");
 
 
- 
-  
-
-  
   ?>
 
 
@@ -418,14 +417,7 @@ ${stock === undefined ? `
         
         // Append each productDiv to the ProductsContainer
         ProductsContainer.appendChild(productDiv);
-        
-     
-       
-     
-  
-    
 
-   
   }
 };
 

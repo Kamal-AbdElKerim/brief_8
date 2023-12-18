@@ -14,10 +14,11 @@ function paginateFun(number_page) {
   const start = (number_page - 1) * limit;
   const end = number_page * limit;
 
-  
+ 
 
 
   const paginate_items = filteredProducts?.slice(start, end).map((elem) => {
+ 
     let buttonsHTML = `  <button type="button" onclick="addtocart(${elem["Reference"]})" class="group/btn relative w-5/6 p-2 text-end bg-white text-[#19488f] text-sm border border-[#19488f] hover:bg-[#19488f] hover:text-white hover:border-transparent">
     <span class="absolute px-4 top-0 left-0 bottom-0 right-full transition-right duration-300 ease-in bg-[#19488f] text-white text-base flex justify-center items-center group-hover/btn:right-0">+</span>
     Ajouter au panier
@@ -281,7 +282,9 @@ function filterProducts(searchValue) {
 
 }
 function addtocart(id) {
+ 
   const xhr = new XMLHttpRequest();
+
   const url = 'product/checkout.php?id_add=' + id;
 
   xhr.onreadystatechange = function() {
@@ -291,6 +294,9 @@ function addtocart(id) {
         // Parse the response, assuming it returns JSON data
         const response = xhr.responseText;
         if (response === "no") {
+          window.location.href = 'login.php';
+
+        }else if (response === "0") {
           window.location.href = 'login.php';
 
         }

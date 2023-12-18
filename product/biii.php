@@ -1,15 +1,21 @@
-<?php include '../layout/coon.php';
+<?php 
+session_start();
+include '../DataBase.php';
+$Database = new Database();
+
 if ( isset($_SESSION["user"]) ) {  
   
 $user_id = $_SESSION["user"] ;
 
 
  
-$panier_result = $conn->query("SELECT * FROM `panier` WHERE client_id = $user_id");
-$panierData = $panier_result->fetchAll(PDO::FETCH_ASSOC); 
 
-$users_result = $conn->query("SELECT * FROM `users` WHERE id = $user_id");
-$usersData = $users_result->fetch(PDO::FETCH_ASSOC); 
+
+$panierData =  $Database->selectData('panier','*',"client_id = $user_id",'');
+
+
+$usersData =  $Database->selectData('users','*',"id = $user_id",'',"1");
+
 
 $total = 0 ;
 $formattedDate = date("Y/m/d");

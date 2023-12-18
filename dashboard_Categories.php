@@ -1,9 +1,16 @@
-<?php include 'layout/coon.php';
+<?php 
+session_start();
+include 'DataBase.php'; 
+
+$data = new categories() ; 
+
 
 
 ?>
-<?php if ( !empty($_SESSION["admin"])) {  ?>
+<?php if ( !empty($_SESSION["admin"])) { 
  
+
+  ?>
 
 <?php 
 if (isset($_POST['submit'])) {
@@ -38,17 +45,24 @@ $Description = $_POST['Description'];
   if (!empty($Nom_Catégories) && !empty($Description) ) {
 
     if (!empty($uploadedFile)) {
-      $stmt = $conn->prepare("INSERT INTO `categorie`( `Nom`, `Description`, `img`) VALUES ('$Nom_Catégories','$Description','$uploadedFile')");
 
-       
-    if (  $stmt->execute()) {
+
+      $datacategories = new categories() ; 
+
+
+      $categories = new categorie("",$Nom_Catégories,$Description ,$uploadedFile , NULL) ;  
+      
+    
+
+     
+    $data->Createcategories($categories);
       $error_input = "yes";
       $color = "success";
       $Nom_Catégories = "";
       $Description = "";
   
 
-    }
+ 
     }
 
 
@@ -66,10 +80,10 @@ $Description = $_POST['Description'];
 // select sql  
 
 
-$user_result = $conn->query("SELECT * FROM `categorie`");
-$categorieData = $user_result->fetchAll(PDO::FETCH_ASSOC);
 
 
+
+$categorieData = $data->getcategories() ; 
 
 
 
@@ -258,27 +272,27 @@ body{
                     
                  
                     <tr>
-                    <td ><img src="<?= $value['img'] ?>" alt="" width="150px" height="154px"></td>
-                    <th  scope="row"><?= $value['Nom'] ?></th>
-                    <td ><?= $value['Description'] ?></td>
+                    <td ><img src="<?= $value->getImg() ?>" alt="" width="150px" height="154px"></td>
+                    <th  scope="row"><?= $value->getNom() ?></th>
+                    <td ><?= $value->getDescription() ?></td>
                   
                     <td >
-                    <a class="btn btn-success mb-2 ms-2" href="Dashboard/update_categorie.php?id=<?= $value['id'] ?>">update</a>
+                    <a class="btn btn-success mb-2 ms-2" href="Dashboard/update_categorie.php?id=<?= $value->getId() ?>">update</a>
                    
 
                   
                    
-                    <button onclick="NoneRequest(<?= $value['id'] ?>, this)" class="btn btn-<?php if (is_null($value['deleted_at'])) {
+                    <button onclick="NoneRequest(<?= $value->getId() ?>, this)" class="btn btn-<?php if (is_null($value->getDeletedAt())) {
                       echo "info" ;
                     }else {
                       echo "secondary" ;
-                    } ?> mb-2 ms-2" type="button" ><div id="result_<?= $value['id'] ?>"><?php if (is_null($value['deleted_at'])) {
+                    } ?> mb-2 ms-2" type="button" ><div id="result_<?= $value->getId() ?>"><?php if (is_null($value->getDeletedAt())) {
                       echo "None" ;
                     }else {
                       echo "Block" ;
                     } ?></div></button>
 
-                    <a class="btn btn-danger mb-2 ms-2 modal-trigger" data-bs-toggle="modal" data-bs-id="<?= $value['id'] ?>" data-bs-name="<?= $value['Nom'] ?>" href="#">delete</a>
+                    <a class="btn btn-danger mb-2 ms-2 modal-trigger" data-bs-toggle="modal" data-bs-id="<?= $value->getId() ?>" data-bs-name="<?= $value->getNom() ?>" href="#">delete</a>
 
                     </td>
                     </tr>
@@ -323,6 +337,7 @@ body{
 <script>
 function NoneRequest(id, button) {
   console.log(button.classList) ;
+  console.log(id) ;
   var xhr = new XMLHttpRequest();
   xhr.open('GET', "Dashboard/masquer_categorie.php?id=" + id, true);
 

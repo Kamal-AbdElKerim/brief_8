@@ -1,13 +1,18 @@
-<?php include '../layout/coon.php';
+<?php 
+session_start();
+include '../DataBase.php';
+$Database = new Database();
+
+
 if ( empty($_SESSION["user"]) ) {  
   
     echo "no" ; 
    }else {
 $user_id = $_SESSION["user"] ;
 
- 
-$panier_result = $conn->query("SELECT * FROM `panier` WHERE client_id = $user_id");
-$panierData = $panier_result->fetchAll(PDO::FETCH_ASSOC);
+
+$panierData =  $Database->selectData('panier','*',"client_id = $user_id",'');
+
 
 
 echo json_encode($panierData);

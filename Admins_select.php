@@ -1,11 +1,17 @@
 
 
 <?php 
-include 'layout/coon.php';
+ include 'DataBase.php'; 
+ session_start();
 
-$Admins_result = $conn->query("SELECT * FROM `admin` ORDER BY id ASC ");
-$AdminData = $Admins_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($AdminData);
+ $data = new admins() ; 
+
+ $AdminData = $data->getadmin('*','','id ASC') ;
+ $num = count($AdminData);
+
+
+
+
 
 
 ?>
@@ -31,10 +37,10 @@ $num = count($AdminData);
                    
                 
                   foreach ($AdminData as  $value) {
-                   if ( $value["super_admin"] === 1) { ?>
+                   if ( $value ->getSuper_admin() === 1 ) { ?>
                      <tr>
-                     <th  scope="row"><div style=" width: 190px;  word-wrap: break-word;  white-space: normal;"><?= $value["Email"] ?></div></th>
-                    <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value["Password"] ?></div></td>
+                     <th  scope="row"><div style=" width: 190px;  word-wrap: break-word;  white-space: normal;"><?= $value ->getEmail() ?></div></th>
+                    <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value ->getPassword()?></div></td>
                     
                     <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;">SUPER Admin
 
@@ -47,11 +53,11 @@ $num = count($AdminData);
             
        
                     <tr>
-                    <th  scope="row"><div style=" width: 190px;  word-wrap: break-word;  white-space: normal;"><?= $value["Email"] ?></div></th>
-                    <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value["Password"] ?></div></td>
+                    <th  scope="row"><div style=" width: 190px;  word-wrap: break-word;  white-space: normal;"><?= $value ->getEmail()  ?></div></th>
+                    <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value ->getPassword() ?></div></td>
                     
                     <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;">
-                    <button  onclick="makeRequest(<?= $value['id'] ?>,'Dashboard/back_userAdmin.php?id=')" class="btn btn-danger mb-2 ms-2" type="button" >Reject</button>
+                    <button  onclick="makeRequest(<?=  $value ->getId() ?>,'Dashboard/back_userAdmin.php?id=')" class="btn btn-danger mb-2 ms-2" type="button" >Reject</button>
 
                     </div>
 

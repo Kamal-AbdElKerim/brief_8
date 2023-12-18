@@ -1,13 +1,16 @@
-<?php include '../layout/coon.php';
+<?php 
+session_start();
+include '../DataBase.php';
+$Database = new Database();
 
 
 
 if (isset($_SESSION["user"])) {
   $user_id = $_SESSION["user"] ;
 }
-$user_result = $conn->query("SELECT * FROM `users` WHERE id =  $user_id ");
-$userData = $user_result->fetch(PDO::FETCH_ASSOC);
+
   
+$userData =  $Database->selectData('users','*',"id =  $user_id",'',"1");
 
   
   ?>
@@ -206,7 +209,7 @@ toggleButton.addEventListener("click", function () {
         </div>
         <div class="flex items-center justify-between">
           <p class="text-sm font-medium text-gray-900">Shipping</p>
-          <p class="font-semibold text-gray-900">60 MAD</p>
+          <p class="font-semibold text-gray-900">shipping gratuit</p>
         </div>
       </div>
       <div class="mt-6 flex items-center justify-between">
@@ -257,7 +260,7 @@ xhttp.onreadystatechange = function() {
         
             <div class="mt-5 sm:mt-0">
               <h2 class="text-lg font-bold text-gray-900">${value.Etiquette}</h2>
-              <p class="mt-1 text-xs text-gray-700">${value.OffreDePrix} MAD</p>
+              <h4 class="mt-1 text-xs text-blue-600">${value.OffreDePrix} MAD</h4>
             </div>
             <div class="mt-4 flex justify-between im sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
               <!-- Quantity control buttons -->
@@ -271,8 +274,8 @@ xhttp.onreadystatechange = function() {
                 </svg>
               </div>
               <!-- Other details like total price and remove button -->
-              <div class="flex items-center space-x-4">
-                <p class="text-sm">${value.Stock * value.OffreDePrix} MAD</p>
+              <div class="flex items-center space-x-5"><span>Total:</span>
+                <h2 class="text-sm">${value.Stock * value.OffreDePrix} MAD</h2>
                 
               </div>
             </div>
@@ -286,7 +289,7 @@ xhttp.onreadystatechange = function() {
        
       });
    document.getElementById("total").innerHTML = total + " MAD";
-   document.getElementById("totalFinal").innerHTML = total + 60 + " MAD";
+   document.getElementById("totalFinal").innerHTML = total + " MAD";
     }
 
    

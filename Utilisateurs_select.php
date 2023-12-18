@@ -1,11 +1,21 @@
 
 
 <?php 
-include 'layout/coon.php';
+ include 'DataBase.php'; 
+ session_start();
 
-$Users_result = $conn->query("SELECT * FROM `users` WHERE is_Active = 1 ORDER BY id DESC");
-$UsersData = $Users_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($UsersData);
+ $data = new Users() ; 
+
+ $UsersData = $data->getUsers('*','is_Active = 1','id DESC') ;
+ $num = count($UsersData);
+
+
+
+
+
+
+// $UsersData =  $Database->selectData('users','*','is_Active = 1','id DESC');
+// $num = count($UsersData);
 
 
 ?>
@@ -34,17 +44,17 @@ $num = count($UsersData);
                    
                 
                   foreach ($UsersData as  $value) {
-                    # code...
+                  
                  ?>
                     <tr>
-                    <th  scope="row"><div style=" width: 90px;  word-wrap: break-word;  white-space: normal;"><?= $value["name"] ?></div></th>
-                    <th  scope="row"><div style=" width: 190px;  word-wrap: break-word;  white-space: normal;"><?= $value["Email"] ?></div></th>
-                    <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value["Password"] ?></div></td>
-                    <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value["ville"] ?></div></td>
+                    <th  scope="row"><div style=" width: 90px;  word-wrap: break-word;  white-space: normal;"><?= $value ->getPrenom() ?></div></th>
+                    <th  scope="row"><div style=" width: 190px;  word-wrap: break-word;  white-space: normal;"><?= $value ->getEmail() ?></div></th>
+                    <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value ->getPassword()?></div></td>
+                    <td ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value ->getVille() ?></div></td>
                     
                     <td ><div style=" width: 120px;  word-wrap: break-word;  white-space: normal;">
-                    <button  onclick="makeRequest(<?= $value['id'] ?>,'Dashboard/Accept_userAdmin.php?id=')" type="button" class="btn btn-success mb-2 ms-2">is admin</button>
-                    <button onclick="makeRequest(<?= $value['id'] ?>,'Dashboard/delete_Visiteurs.php?id=')" class="btn btn-danger mb-2 ms-2" type="button" >delete</button>
+                    <button  onclick="makeRequest(<?= $value ->getId() ?>,'Dashboard/Accept_userAdmin.php?id=')" type="button" class="btn btn-success mb-2 ms-2">is admin</button>
+                    <button onclick="makeRequest(<?= $value ->getId() ?>,'Dashboard/delete_Visiteurs.php?id=')" class="btn btn-danger mb-2 ms-2" type="button" >delete</button>
 
                     </div>
 
@@ -52,7 +62,9 @@ $num = count($UsersData);
                    
 
                     </tr>
-                    <?php    }   }?>
+                    <?php  
+
+                  }   }?>
 
                     </tbody>
                 </table>

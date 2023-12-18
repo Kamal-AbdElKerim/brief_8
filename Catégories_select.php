@@ -1,8 +1,12 @@
 <?php
-include 'layout/coon.php';
+session_start();
+include 'DataBase.php';
+$Database = new Database();
 
-$categorie_result = $conn->query("SELECT * FROM `categorie` WHERE deleted_at IS NULL");
-$categorieData = $categorie_result->fetchAll(PDO::FETCH_ASSOC);
+
+
+$categorieData =  $Database->selectData('categorie','*','deleted_at IS NULL','');
+
 
 echo json_encode($categorieData); ?>
 

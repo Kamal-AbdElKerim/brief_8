@@ -1,5 +1,7 @@
 <?php 
-include 'layout/coon.php';
+
+ session_start();
+
 
 
 

@@ -1,9 +1,18 @@
-        <?php include '../layout/coon.php';
+        <?php 
+        session_start();
+        include '../DataBase.php';
+    
+        
+        $data = new categories() ; 
+        $Database = new Database() ; 
 
         $id = $_GET["id"] ; 
 
-        $user_result = $conn->query("SELECT * FROM `categorie` WHERE id = $id");
-        $userData = $user_result->fetch(PDO::FETCH_ASSOC);
+    
+
+        $categorieData = $data->getcategories('*',"id = $id",'') ; 
+               
+
 
 
         ?>
@@ -38,7 +47,7 @@
 
       }
                 } else {
-                    $uploadedFil =  $userData["img"] ;
+                    $uploadedFil =  $categorieData[0]->getImg() ;
                     
                 }
       
@@ -49,18 +58,19 @@
             if (!empty($Nom_Catégories) && !empty($Description) ) {
 
                 if (!empty($uploadedFil)) {
-                $stmt = $conn->prepare("UPDATE `categorie` SET `Nom`='$Nom_Catégories',`Description`='$Description',`img`='$uploadedFil' WHERE id = $id");
 
+                $sql = "UPDATE `categorie` SET `Nom`='$Nom_Catégories',`Description`='$Description',`img`='$uploadedFil' WHERE id = $id";
+           
 
                 
-                if (  $stmt->execute()) {
+                 $sbm = $Database->updateData($sql) ;
                 $error_input = "yes";
                 $color = "success";
                 header("Location: ../dashboard_Categories.php");
                 exit; 
             
 
-                }
+                
                 }
 
 
@@ -220,16 +230,16 @@
               <div class="col-12 col-sm-12  p-5 text-light text-start">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label ">Nom de Catégories</label>
-                <input name="Nom_Catégories" value="<?php   echo $Nom_Catégories ?? $userData["Nom"]  ?>" placeholder="nom..." type="text" class="form-control " id="exampleFormControlInput1" >
+                <input name="Nom_Catégories" value="<?php   echo $Nom_Catégories ?? $categorieData[0]->getNom()  ?>" placeholder="nom..." type="text" class="form-control " id="exampleFormControlInput1" >
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label  ">Description</label>
-                <textarea name="Description"  placeholder="Description..." class="form-control" id="exampleFormControlTextarea1" rows="3"><?php   echo $Description ??  $userData["Description"]   ?></textarea>
+                <textarea name="Description"  placeholder="Description..." class="form-control" id="exampleFormControlTextarea1" rows="3"><?php   echo $Description ??  $categorieData[0]->getDescription()   ?></textarea>
               </div> 
               <label class="mb-2" for="">add img</label>
              <div class="row g-0 text-center  ms-1">
            <div class=" col-xl-6">  <label class="label_file col-sm-4" for="apply"><input type="file"  name="image" id="apply" accept="image/*">Get file</label></div>
-           <div class=" col-xl-6 mt-4"> <img src="../<?= $userData["img"] ?>" alt="" width="180px" height="190px" >  </div>
+           <div class=" col-xl-6 mt-4"> <img src="../<?= $categorieData[0]->getImg() ?>" alt="" width="180px" height="190px" >  </div>
              </div>
              <?php if (isset($error_file , $_POST['submit'])  ) { ?>
                         <div class="alert alert-<?= $color ?> mt-4" role="alert">

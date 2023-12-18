@@ -8,6 +8,7 @@ $UsersData = $Users_result->fetch(PDO::FETCH_ASSOC);
 
 
 $Email = $UsersData["Email"] ;
+$Email = $UsersData["Email"] ;
 $Password = $UsersData["Password"] ;
 
 

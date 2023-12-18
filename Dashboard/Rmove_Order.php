@@ -1,11 +1,13 @@
-<?php include '../layout/coon.php';
+<?php 
+session_start();
+include '../DataBase.php';
+$Database = new Database();
 
  $id = $_GET["id"] ;
 
-$stmt = $conn->prepare("DELETE FROM `details_commande` WHERE details_id =$id ");
-$stmt->execute(); 
 
-
+$sql = "DELETE FROM details_commande WHERE details_id =$id ";
+$Database->updateData($sql);
 
 
 

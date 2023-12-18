@@ -1,48 +1,39 @@
 <?php 
-include 'layout/coon.php';
+
+session_start();
+include 'DataBase.php';
+$Database = new Database();
 
 
-$Admins_result = $conn->query("SELECT * FROM `admin` ORDER BY id ASC ");
-$AdminData = $Admins_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($AdminData);
-
-$numAdminData = ($num / 100) * 100;
-
-
-
-$user_result = $conn->query("SELECT * FROM `categorie`");
-$categorieData = $user_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($categorieData);
-
-$numcategorie = ($num / 100) * 100;
-
-
-$produit_result = $conn->query("SELECT * FROM `produit`");
-$produitData = $produit_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($produitData);
-
-$numproduit = ($num / 100) * 100;
-
-$Users_result = $conn->query("SELECT * FROM `users` WHERE is_Active = 1 ORDER BY id DESC");
-$UsersData = $Users_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($UsersData);
-
-$numUsersData = ($num / 100) * 100;
-
-$details_commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 0 ORDER BY details_id DESC");
-$details_commandeData = $details_commande_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($details_commandeData);
-
-$commandeData = ($num / 100) * 100;
-
-$commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 1 ORDER BY details_id DESC");
-$commandeData1 = $commande_result->fetchAll(PDO::FETCH_ASSOC);
-$num = count($commandeData1);
-
-$commandeData1 = ($num / 100) * 100;
+function calc($numbre)  {
+    $num = count($numbre);
+    return ($num / 100) * 100;
+}
 
 
 
+$AdminData =  $Database->selectData('admin','*','','id ASC');
+$numAdminData = calc($AdminData);
+
+
+$categorieData =  $Database->selectData('categorie','*','','');
+$numcategorie = calc($categorieData);
+
+
+$produitData =  $Database->selectData('produit','*','','');
+$numproduit = calc($produitData);
+
+
+$UsersData =  $Database->selectData('users','*','is_Active = 1','id DESC');
+$numUsersData = calc($UsersData);
+
+
+$details_commandeData =  $Database->selectData('details_commande','*','confirm_achter = 0','details_id DESC');
+$commandeData = calc($details_commandeData);
+
+
+$commandeData1 =  $Database->selectData('details_commande','*','confirm_achter = 1','details_id DESC');
+$commandeData1 = calc($commandeData1);
 
 ?>
 

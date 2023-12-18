@@ -1,9 +1,16 @@
-<?php include '../layout/coon.php';
+<?php 
+session_start();
+include '../DataBase.php';
+
+$data = new categories() ; 
+
+
 
  $id = $_GET["id"] ;
 
-$stmt = $conn->prepare("DELETE FROM `categorie` WHERE id = $id");
-$stmt->execute(); 
+ $data->deletecategorie("id = $id") ;
+
+
 
 header("Location: ../dashboard_Categories.php");
 exit; 

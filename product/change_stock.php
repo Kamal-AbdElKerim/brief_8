@@ -1,5 +1,8 @@
 <?php
-include '../layout/coon.php'; // Include your database connection file
+session_start();
+include '../DataBase.php';
+$Database = new Database();
+
 
 if (isset($_GET["op"]) && isset($_GET["id_product"]) && !empty($_SESSION["user"])) {
     $op = $_GET["op"];
@@ -7,12 +10,10 @@ if (isset($_GET["op"]) && isset($_GET["id_product"]) && !empty($_SESSION["user"]
     $user_id = $_SESSION["user"];
 
     // Prepare and execute the SELECT query using prepared statements
-    $panier_query = $conn->prepare("SELECT * FROM `panier` WHERE client_id = :user_id AND panier_id = :id_product");
-    $panier_query->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-    $panier_query->bindParam(':id_product', $id_product, PDO::PARAM_INT);
-    $panier_query->execute();
+ 
 
-    $panierData = $panier_query->fetch(PDO::FETCH_ASSOC);
+    $panierData =  $Database->selectData('panier','*',"client_id = $user_id AND panier_id = $id_product",'',"1");
+
 
     if (!empty($panierData)) {
         $currentStock = $panierData['Stock'];
@@ -29,12 +30,11 @@ if (isset($_GET["op"]) && isset($_GET["id_product"]) && !empty($_SESSION["user"]
         }
 
         // Prepare and execute the UPDATE query using prepared statements
-        $update_query = $conn->prepare("UPDATE `panier` SET `Stock` = :currentStock WHERE panier_id = :id_product");
-        $update_query->bindParam(':currentStock', $currentStock, PDO::PARAM_INT);
-        $update_query->bindParam(':id_product', $id_product, PDO::PARAM_INT);
-        $update_query->execute();
-
      
+
+        $sql = "UPDATE panier SET `Stock` = '$currentStock' WHERE panier_id = '$id_product'";
+
+          $Database->updateData($sql);
 } 
 }
 ?>

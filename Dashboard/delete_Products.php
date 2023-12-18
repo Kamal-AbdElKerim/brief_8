@@ -1,9 +1,14 @@
-<?php include '../layout/coon.php';
+<?php 
+session_start();
+include '../DataBase.php';
+$Database = new Database();
 
  $id = $_GET["id"] ;
 
-$stmt = $conn->prepare("DELETE FROM `produit` WHERE Reference = $id");
-$stmt->execute(); 
+
+$sql = "DELETE FROM produit WHERE Reference = $id";
+$Database->updateData($sql);
+
 header("Location: ../dashboard_Products.php");
 exit; 
 

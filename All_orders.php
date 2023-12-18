@@ -1,13 +1,13 @@
 
 
 <?php 
-include 'layout/coon.php';
 
-$commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 0 ORDER BY details_id ASC ");
-$commandeData = $commande_result->fetchAll(PDO::FETCH_ASSOC);
+include 'DataBase.php'; 
+session_start();
+$Database = new Database();
 
 
-
+$commandeData =  $Database->selectData('details_commande','*','confirm_achter = 0','details_id ASC');
 
 $num = count($commandeData);
 
@@ -38,12 +38,13 @@ $num = count($commandeData);
                 
                   foreach ($commandeData as  $value) {
                     $id =  $value["id_user"] ; 
-                    $Users_result = $conn->query("SELECT * FROM `users` WHERE id = $id ");
-                    $UsersData = $Users_result->fetch(PDO::FETCH_ASSOC);
+                 
+                    $UsersData =  $Database->selectData('users','*',"id = $id",'');
+
                    ?>
                      <tr>
                      <th  scope="row"><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value["commande_id"] ?></div></th>
-                    <th ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $UsersData["name"] ?></div></th>
+                    <th ><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $UsersData[0]["name"] ?></div></th>
 
                     <th ><div style=" width: 200px;  word-wrap: break-word;  white-space: normal;"><?= $value["names"] ?></div></th>
                     <th ><div style=" width: 80px;  word-wrap: break-word;  white-space: normal;"><?= $value["prix_total"] ?> MAD</div></th>

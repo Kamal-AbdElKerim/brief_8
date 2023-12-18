@@ -1,24 +1,29 @@
-<?php include '../layout/coon.php';
+<?php
+session_start();
+include '../DataBase.php';
+$Database = new Database();
 
  $id = $_GET["id"] ;
  $timee = date("Y/m/d H:i:s");
 
- $stmt = $conn->prepare("SELECT * FROM `produit` WHERE Reference = ?");
- $stmt->execute([$id]);
- $produitData = $stmt->fetch(PDO::FETCH_ASSOC);
 
- if ($produitData) {
-     if (empty($produitData["deleted_at"])) {
-         // Update the 'deleted_at' field with the current timestamp
-         $stmt = $conn->prepare("UPDATE `produit` SET `deleted_at` = ? WHERE Reference = ?");
-         $stmt->execute([$timee, $id]);
+
+ $produitData = $Database->selectData('produit','*',"Reference = $id",'');
+
+
+
+
+     if (empty($produitData[0]["deleted_at"])) {
+    
+
+         $sql = "UPDATE produit SET deleted_at = '$timee' WHERE Reference = $id";
+         $Database->updateData($sql);
      } else {
-         // Set the 'deleted_at' field to NULL 
-         $stmt = $conn->prepare("UPDATE `produit` SET `deleted_at` = NULL WHERE Reference = ?");
-         $stmt->execute([$id]);
+     
          
+         $sql = "UPDATE produit SET deleted_at = NULL WHERE Reference = $id";
+         $Database->updateData($sql);
      }
- }
 
 
 

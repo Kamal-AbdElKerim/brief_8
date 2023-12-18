@@ -1,11 +1,25 @@
 <?php 
- include 'layout/coon.php';
+session_start();
+include 'DataBase.php'; 
+
+$data = new categories() ; 
+$dataproducts = new products() ; 
+
+
 
  if ( !empty($_SESSION["admin"])) {  
 
-$categorie_result = $conn->query("SELECT * FROM `categorie`");
-$categorieData = $categorie_result->fetchAll(PDO::FETCH_ASSOC);
+  $categorieData = $data->getcategories() ; 
 
+
+
+
+
+
+// echo "<pre>" ;
+// print_r($categorieData); 
+// echo "</pre>" ; 
+// die (); 
 
 
 
@@ -22,14 +36,13 @@ if (isset($_POST["submit"])) {
   $categories = $_POST['Categories'];
 
 
-     // Check if file was uploaded without errors
      if (isset($_FILES["image"]) && $_FILES["image"]["error"] == 0) {
-      $uploadDir = "Dashboard/photo_Products/"; // Directory where you want to save the uploaded images
+      $uploadDir = "Dashboard/photo_Products/";
 
-             // Get file extension
+           
              $fileExtension = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
         
-             // Generate a unique filename
+          
              $uniqueFilename = uniqid('image_', true) . '.' . $fileExtension;
      
              $uploadedFile = $uploadDir . $uniqueFilename;
@@ -49,10 +62,18 @@ if (isset($_POST["submit"])) {
   if (!empty($etiquette) && !empty($code)  && !empty($description)  && !empty($prixAchat)  && !empty($offreDePrix) && !empty($prixFinal) && !empty($quantiteMin) && !empty($quantiteStock) && $categories !== "null"   ) {
 
     if (!empty($uploadedFile)) {
-      $stmt = $conn->prepare("INSERT INTO `produit`( `Etiquette`, `Code à barres`, `Description`, `PrixAchat`, `img` , `PrixFinal`, `OffreDePrix`, `QuantiteMin`, `QuantiteStock`, `CategorieID`) VALUES ('$etiquette','$code','$description','$prixAchat','$uploadedFile','$prixFinal','$offreDePrix','$quantiteMin','$quantiteStock','$categories')");
+ 
 
+ 
+      
+        $productsD = new products() ; 
+
+
+        $newproduct = new product("",$etiquette,$code ,$prixAchat,$uploadedFile,$prixFinal,$offreDePrix,$description,$quantiteMin,$quantiteStock,$categories ,null) ; 
+        $productsD->Createproduct($newproduct);
+      
        
-    if (  $stmt->execute()) {
+  
       $error_input = "yes";
       $color = "success";
       $etiquette = "";
@@ -65,7 +86,7 @@ if (isset($_POST["submit"])) {
       $code = "";
   
 
-    }
+  
     }
 
 
@@ -76,8 +97,9 @@ if (isset($_POST["submit"])) {
     $color = "danger";
   }   
 }
-$produit_result = $conn->query("SELECT * FROM `produit`");
-$produitData = $produit_result->fetchAll(PDO::FETCH_ASSOC);
+
+$produitData = $dataproducts->getproducts() ; 
+
 ?>
 
 <!DOCTYPE html>
@@ -248,7 +270,7 @@ $produitData = $produit_result->fetchAll(PDO::FETCH_ASSOC);
                 <option value="null" selected>Choose Categories</option>
                 <?php foreach ($categorieData as  $value) {    ;?>
 
-                <option value="<?= $value["id"] ?>"><?= $value["Nom"] ?></option>
+                <option value="<?=  $value ->getId() ?>"><?= $value ->getNom() ?></option>
                
                 <?php   }  ?>
               </select>
@@ -306,48 +328,43 @@ $produitData = $produit_result->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  <?php foreach ($produitData as  $value) {     
-                    
-                    $CategorieID  = $value['CategorieID'];
-                    ?>
-                     
-                    <?php $stm = $conn->query("SELECT  `Nom` FROM `categorie` WHERE id = $CategorieID");
-                          $categorie = $stm->fetch(PDO::FETCH_ASSOC); 
-                         
-                          ?>
+                <?php foreach ($produitData as $value) {     
+    $CategorieID = $value->getCategorieID();
+ 
+    $categorie = $data->getcategories('*', "id = $CategorieID", '') ; 
 
-                   
-                    <tr>
-                    <td ><img src="<?= $value['img'] ?>" alt="" width="150px" height="154px"></td>
-                    <th  scope="row"><?= $value['Etiquette'] ?></th>
-                    <th  scope="row"><?= $value['Description'] ?></th>
-                    <th  scope="row"><?= $value['Code à barres'] ?></th>
-                    <td ><?= $value['PrixAchat'] ?></td>
-                    <td ><?= $value['PrixFinal'] ?></td>
-                    <td ><?= $value['OffreDePrix'] ?></td>
-                    <td ><?= $value['QuantiteMin'] ?></td>
-                    <td ><?= $value['QuantiteStock'] ?></td>
-                    <td ><?= $categorie['Nom'] ?></td>
-                  
-                   
+?>
+    <tr>
+        <td><img src="<?= $value->getImg() ?>" alt="" width="150px" height="154px"></td>
+        <th scope="row"><?= $value->getEtiquette() ?></th>
+        <th scope="row"><?= $value->getDescription() ?></th>
+        <th scope="row"><?= $value->getCodeBarres() ?></th>
+        <td><?= $value->getPrixAchat() ?></td>
+        <td><?= $value->getPrixFinal() ?></td>
+        <td><?= $value->getOffreDePrix() ?></td>
+        <td><?= $value->getQuantiteMin() ?></td>
+        <td><?= $value->getQuantiteStock() ?></td>
+        <td><?= $categorie[0]->getNom() ?></td>
+        <td>
+            <a class="btn btn-success mb-2 ms-2" href="Dashboard/update_Products.php?id=<?= $value->getReference() ?>">update</a>
+            <button onclick="NoneRequest(<?= $value->getReference() ?>, this)" class="btn btn-<?php if (is_null($value->getDeletedAt())) {
+                echo "info";
+            } else {
+                echo "secondary";
+            } ?> mb-2 ms-2" type="button">
+                <div id="result_<?= $value->getReference() ?>">
+                    <?php if (is_null($value->getDeletedAt())) {
+                        echo "None";
+                    } else {
+                        echo "Block";
+                    } ?>
+                </div>
+            </button>
+            <a class="btn btn-danger mb-2 ms-2 modal-trigger" data-bs-toggle="modal" data-bs-id="<?= $value->getReference() ?>" data-bs-name="<?= $value->getEtiquette() ?>" href="#">delete</a>
+        </td>
+    </tr>
+<?php } ?>
 
-                    <td >
-                    <a class="btn btn-success mb-2 ms-2" href="Dashboard/update_Products.php?id=<?= $value['Reference'] ?>">update</a>
-                    <button onclick="NoneRequest(<?= $value['Reference'] ?>, this)" class="btn btn-<?php if (is_null($value['deleted_at'])) {
-                      echo "info" ;
-                    }else {
-                      echo "secondary" ;
-                    } ?> mb-2 ms-2" type="button" ><div id="result_<?= $value['Reference'] ?>"><?php if (is_null($value['deleted_at'])) {
-                      echo "None" ;
-                    }else {
-                      echo "Block" ;
-                    } ?></div></button>
-
-                    <a class="btn btn-danger mb-2 ms-2 modal-trigger" data-bs-toggle="modal" data-bs-id="<?= $value['Reference'] ?>" data-bs-name="<?= $value['Etiquette'] ?>" href="#">delete</a>
-                    </td>
-                    </tr>
-                
-                    <?php  }?>
              
               
                 </tbody>
@@ -382,6 +399,7 @@ $produitData = $produit_result->fetchAll(PDO::FETCH_ASSOC);
 <script>
   function NoneRequest(id, button) {
   console.log(button.classList) ;
+  console.log(id) ;
   var xhr = new XMLHttpRequest();
   xhr.open('GET', "Dashboard/masquer_Products.php?id=" + id, true);
 

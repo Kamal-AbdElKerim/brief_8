@@ -1,14 +1,16 @@
-<?php include '../layout/coon.php';
+<?php 
+        session_start();
+        include '../DataBase.php';
+        $Database = new Database();
 
 $id = $_GET["id"] ;
 
 
-$categorie_result = $conn->query("SELECT * FROM `categorie`");
-$categorieData = $categorie_result->fetchAll(PDO::FETCH_ASSOC);
+
+$categorieData =  $Database->selectData('categorie','*',"","");
 
 
-$produit_result = $conn->query("SELECT * FROM `produit` WHERE Reference = $id");
-$produitData = $produit_result->fetch(PDO::FETCH_ASSOC);
+$produitData =  $Database->selectData('produit','*',"Reference = $id","");
 
 
 if (isset($_POST["submit"])) {
@@ -48,14 +50,16 @@ if (isset($_POST["submit"])) {
 
       }
   } else {
-    $uploadedFil =  $produitData["img"] ;
+    $uploadedFil =  $produitData[0]["img"] ;
   }
   if (!empty($etiquette) && !empty($code)  && !empty($description)  && !empty($prixAchat)  && !empty($prixFinal)   ) {
 
     if (!empty($uploadedFil)) {
-      $stmt = $conn->prepare("UPDATE `produit` SET `Etiquette`=?, `Code à barres`=?, `PrixAchat`=?, `img`=?, `PrixFinal`=?, `OffreDePrix`=?, `Description`=?, `QuantiteMin`=?, `QuantiteStock`=?, `CategorieID`=? WHERE Reference = ?");
-            $stmt->execute([$etiquette, $code, $prixAchat, $uploadedFil, $prixFinal, $offreDePrix, $description, $quantiteMin, $quantiteStock, $categories, $id]);      
 
+
+      $sql = "UPDATE `produit` SET `Etiquette`='$etiquette', `Code à barres`='$code', `PrixAchat`='$prixAchat', `img`='$uploadedFil', `PrixFinal`='$prixFinal', `OffreDePrix`='$offreDePrix', `Description`='$description', `QuantiteMin`='$quantiteMin', `QuantiteStock`='$quantiteStock', `CategorieID`='$categories' WHERE Reference='$id'";
+
+      $Database->updateData($sql);
 
   
       header("Location: ../dashboard_Products.php");
@@ -213,46 +217,47 @@ height: 250px !important;
            <div class="row  ">
            <div class="col-6 mb-4">
                 <label for="exampleFormControlInput1" class="form-label ">Etiquette</label>
-                <input type="text" value="<?= $etiquette ?? $produitData["Etiquette"]   ?>" class="form-control" name="Etiquette" id="exampleFormControlInput1" placeholder="name..." >
+                <input type="text" value="<?= $etiquette ?? $produitData[0]["Etiquette"]   ?>" class="form-control" name="Etiquette" id="exampleFormControlInput1" placeholder="name..." >
               </div>
               <div class="col-6">
                 <label for="exampleFormControlInput1" class="form-label ">Code à barres	</label>
-                <input type="text" class="form-control  " value="<?php   echo $code ?? $produitData["Code à barres"]  ?>" name="Code" id="exampleFormControlInput1" >
+                <input type="text" class="form-control  " value="<?php   echo $code ?? $produitData[0]["Code à barres"]  ?>" name="Code" id="exampleFormControlInput1" >
               </div>
               <div class="mb-4 col-12 ">
                 <label for="exampleFormControlTextarea1" class="form-label  ">Description	</label>
-                <textarea placeholder="Description..." class="form-control" name="Description" id="exampleFormControlTextarea1" rows="3"><?php   echo $description ?? $produitData["Description"]  ?></textarea>
+                <textarea placeholder="Description..." class="form-control" name="Description" id="exampleFormControlTextarea1" rows="3"><?php   echo $description ?? $produitData[0]["Description"]  ?></textarea>
               </div> 
               <div class="row justify-content-center ">
               <div class="col-lg-2  mb-4">
                 <label for="exampleFormControlInput1" class="form-label ">PrixAchat</label>
-                <input type="number" class="form-control " value="<?php   echo $prixAchat ?? $produitData["PrixAchat"]  ?>" name="PrixAchat" id="exampleFormControlInput1" >
+                <input type="number" class="form-control " value="<?php   echo $prixAchat ?? $produitData[0]["PrixAchat"]  ?>" name="PrixAchat" id="exampleFormControlInput1" >
               </div>
               <div class=" col-lg-2 mb-4">
                 <label for="exampleFormControlInput1" class="form-label ">PrixFinal</label>
-                <input type="number" class="form-control " value="<?php   echo $prixFinal ?? $produitData["PrixFinal"]  ?>" name="PrixFinal" id="exampleFormControlInput1" >
+                <input type="number" class="form-control " value="<?php   echo $prixFinal ?? $produitData[0]["PrixFinal"]  ?>" name="PrixFinal" id="exampleFormControlInput1" >
               </div>
               <div class="col-lg-2 mb-4">
                 <label for="exampleFormControlInput1" class="form-label ">OffreDePrix</label>
-                <input type="number" class="form-control "  value="<?php   echo $offreDePrix ?? $produitData["OffreDePrix"] ?>" name="OffreDePrix" id="exampleFormControlInput1" >
+                <input type="number" class="form-control "  value="<?php   echo $offreDePrix ?? $produitData[0]["OffreDePrix"] ?>" name="OffreDePrix" id="exampleFormControlInput1" >
               </div>
              
               <div class="col-lg-2 mb-4">
                 <label for="exampleFormControlInput1" class="form-label ">QuantiteMin</label>
-                <input type="number" class="form-control "  value="<?php   echo $quantiteMin ?? $produitData["QuantiteMin"] ?>" name="QuantiteMin" id="exampleFormControlInput1" >
+                <input type="number" class="form-control "  value="<?php   echo $quantiteMin ?? $produitData[0]["QuantiteMin"] ?>" name="QuantiteMin" id="exampleFormControlInput1" >
               </div>
               <div class="col-lg-2 mb-4">
                 <label for="exampleFormControlInput1" class="form-label ">QuantiteStock</label>
-                <input type="number" class="form-control "  value="<?php   echo $quantiteStock ?? $produitData["QuantiteStock"] ?>" name="QuantiteStock" id="exampleFormControlInput1" >
+                <input type="number" class="form-control "  value="<?php   echo $quantiteStock ?? $produitData[0]["QuantiteStock"] ?>" name="QuantiteStock" id="exampleFormControlInput1" >
               </div>
               </div>
               <div class="col-lg-3 mb-4">
               <label for="exampleFormControlTextarea1" class="form-label">Categories</label>
               <select class="form-select" name="Categories" aria-label="Default select example">
               
-                <?php   $CategorieID  = $produitData['CategorieID']; ?>
-                <?php $stm = $conn->query("SELECT  * FROM `categorie` WHERE id = $CategorieID");
-                        $categorie = $stm->fetch(PDO::FETCH_ASSOC); 
+                <?php   $CategorieID  = $produitData[0]['CategorieID']; ?>
+                <?php 
+                        $categorie =  $Database->selectData('categorie','*',"id = $CategorieID","","1");
+
                        
                         ?>
                 <option value="<?= $categorie["id"] ?>" selected><?= $categorie["Nom"]?></option>
@@ -284,7 +289,7 @@ height: 250px !important;
              <div class="row justify-content-start ">
              <div class="row g-0 text-center  ms-1">
            <div class=" col-xl-6">  <label class="label_file col-sm-4" for="apply"><input type="file"  name="image" id="apply" accept="image/*">Get file</label></div>
-           <div class=" col-xl-6 mt-4"> <img src="../<?= $produitData["img"] ?>" alt="" width="180px" height="190px" >  </div>
+           <div class=" col-xl-6 mt-4"> <img src="../<?= $produitData[0]["img"] ?>" alt="" width="180px" height="190px" >  </div>
              </div>             </div>
              <?php if (isset($error_file , $_POST['submit'])  ) { ?>
                         <div class="alert alert-<?= $color ?> mt-4" role="alert">

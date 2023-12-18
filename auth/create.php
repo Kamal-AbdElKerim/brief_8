@@ -1,5 +1,6 @@
 <?php
-include '../layout/coon.php';
+include '../DataBase.php'; 
+
 
 // Validate data (you may want to add more validation)
 $requiredFields = ['name', 'prénom', 'email', 'password', 'adresse', 'phone', 'ville'];
@@ -23,7 +24,7 @@ $password = $_POST['password']; // Hash your password before inserting
 $is_active = 1;
 
 try {
-    // Check If Email Already Exists
+    // Check If Email Already Exists 
     $stmtEmailCheck = $conn->prepare("SELECT * FROM users WHERE Email = :email");
     $stmtEmailCheck->bindParam(':email', $email);
     $stmtEmailCheck->execute();
@@ -35,24 +36,15 @@ try {
         echo json_encode(array("error" => "User already exists.", "status" => 401));
     } else {
         // SQL query to insert data into the table
-        $sql = "INSERT INTO users (name, prénom, phone, Email, adresse, ville, Password, is_Active)
-                VALUES (:name, :prenom, :phone, :email, :adresse, :ville, :password, :is_active)";
+        session_start();
 
-        // Prepare the SQL query
-        $stmtInsert = $conn->prepare($sql);
+            $data = new Users() ;
 
-        // Bind parameters for data insertion
-        $stmtInsert->bindParam(':name', $name);
-        $stmtInsert->bindParam(':prenom', $prenom);
-        $stmtInsert->bindParam(':phone', $phone);
-        $stmtInsert->bindParam(':email', $email);
-        $stmtInsert->bindParam(':adresse', $adresse);
-        $stmtInsert->bindParam(':ville', $ville);
-        $stmtInsert->bindParam(':password', $password);
-        $stmtInsert->bindParam(':is_active', $is_active);
+            $newUser = new User("",$name,$prenom,$phone,$email,$adresse,$ville,$password,$is_active) ; 
 
-        // Execute the data insertion query
-        $stmtInsert->execute();
+            $data->CreateUser($newUser);
+
+
 
         http_response_code(201);
         echo json_encode(array("message" => "User created successfully.", "status" => 201));

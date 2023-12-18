@@ -1,16 +1,17 @@
-      <?php include '../layout/coon.php';
+      <?php 
+      session_start();
+      include '../DataBase.php';
+      $Database = new Database();
 
 
-      if (isset($_GET["id_add"])) {
+      if (isset($_GET["id_add"]) && isset($_SESSION["user"])) {
         
 
       $id_add = $_GET["id_add"] ; 
      
 
-
-      $produit_result = $conn->query("SELECT * FROM `produit` WHERE Reference = $id_add");
-      $produitData = $produit_result->fetch(PDO::FETCH_ASSOC);
  
+      $produitData =  $Database->selectData('produit','*',"Reference = $id_add",'',"1");
 
 
       $Reference = $produitData["Reference"] ;
@@ -26,8 +27,9 @@
       }else {
         $user_id = $_SESSION["user"] ;
 
-        $panier_result = $conn->query("SELECT * FROM `panier`");
-        $panierData = $panier_result->fetchAll(PDO::FETCH_ASSOC);
+
+        $panierData =  $Database->selectData('panier','*',"",'');
+
 
          
      
@@ -50,25 +52,17 @@ if (!$found) {
    
   $user_id = $_SESSION["user"] ;
 
-  $stmt = $conn->prepare("INSERT INTO `panier`( `Etiquette`, `img`, `OffreDePrix`,`QuantiteStock`,  `client_id`) VALUES ('$Etiquette','$img','$OffreDePrix','$QuantiteStock' ,'$user_id')");
-  
-$stmt->execute() ; 
+
+
+$sql = "INSERT INTO panier ( `Etiquette`, `img`, `OffreDePrix`,`QuantiteStock`,  `client_id`) VALUES ('$Etiquette','$img','$OffreDePrix','$QuantiteStock' ,'$user_id')";
+
+$Database->updateData($sql);
 }
     
-     
-   
-    
-
-      
-
-    
-
-
       }
         
         ?>
 
-
-
-
-      <?php }  ?>
+      <?php } else {
+        echo "0";
+      } ?>

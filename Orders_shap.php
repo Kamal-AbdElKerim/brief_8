@@ -1,10 +1,13 @@
 
 
 <?php 
-include 'layout/coon.php';
+include 'DataBase.php'; 
+session_start();
+$Database = new Database();
 
-$commande_result = $conn->query("SELECT * FROM `details_commande` WHERE confirm_achter = 1 ORDER BY details_id ASC ");
-$commandeData = $commande_result->fetchAll(PDO::FETCH_ASSOC);
+
+$commandeData =  $Database->selectData('details_commande','*','confirm_achter = 1','details_id ASC');
+
 
 
 
@@ -38,8 +41,8 @@ $num = count($commandeData);
                 
                   foreach ($commandeData as  $value) {
                     $id =  $value["id_user"] ; 
-                    $Users_result = $conn->query("SELECT * FROM `users` WHERE id = $id ");
-                    $UsersData = $Users_result->fetch(PDO::FETCH_ASSOC);
+                    $UsersData =  $Database->selectData('users','name',"id = $id",'',"1");
+
                    ?>
                      <tr>
                      <th  scope="row"><div style=" width: 100px;  word-wrap: break-word;  white-space: normal;"><?= $value["commande_id"] ?></div></th>

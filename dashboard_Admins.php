@@ -1,6 +1,5 @@
 <?php 
-include 'layout/coon.php';
-
+session_start();
 
 
 ?>
@@ -190,6 +189,7 @@ body{
   function makeRequest(id ,url) { 
   var xhr = new XMLHttpRequest();
   console.log(url);
+  console.log(id);
   xhr.open('GET', `${url}` + id, true);
 
   xhr.onload = function() {
